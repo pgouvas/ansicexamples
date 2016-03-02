@@ -5,30 +5,30 @@ enum {
     SIZEOFMATRIX = 10
 };
 
-float DEMAND[SIZEOFMATRIX] = {1400,1100,1500,1500,2000,1800,1600,1300,1900,1900};
+float DEMAND[SIZEOFMATRIX] = {1400,1100,1500,1500,2000,1800,1600,1300,1900,1900}; //Είναι η global μεταβλητή του πίνακα τη ζήτησης
 
 
-float getInputFromKeyboard(){
+float getInputFromKeyboard(){	//Η συνάρτηση αυτή διαβάζει από το πληκτρολόγια τον συντελεστή και κάνει ελέγχους αμυντικού προγραμματισμού (Θέμα Α)
     float a;
     char trash[1024];  
     while ( 1 ){
       scanf( "%f", &a );
       if (a>0 && a < 1) break;
-      //assumes 1 entry per line and no line longer than 1023 characters */
+      //Υποθέτουμε μια εισαγωγή ανα γραμμή που δεν υπερβαίνει τους 1023 χαρακτήρες */
       if (NULL == fgets(trash, sizeof(trash), stdin));
       printf("Ο Αριθμός που δώσατε δεν ήταν αποδεκτός.\nΜπορείτε να δώσετε τιμές μεγαλύτερες από 0 και μικρότερες από 1!\nΠαρακαλώ προσπαθείστε ξανά:"); 
     }
     return a;
 }
 
-void printArray(float f[], int size){
+void printArray(float f[], int size){  //Η συναρτηση αυτή τυπώνει τα περιεχόμενα ενός array
     int index=0;
     for (index=0; index<size; index++){
       printf("%f ",f[index]);
     }//for
 }
 
-float calculateMAE(float error[]){
+float calculateMAE(float error[]){	//Υπολογισμός Μέσου Απόλυτου Σφάλματος
   float ret=0;
   int index=0;
   float cumul=0;
@@ -39,7 +39,7 @@ float calculateMAE(float error[]){
   return ret;
 }
 
-float calculateMSE(float error[]){
+float calculateMSE(float error[]){		//Υπολογισμός Τετραγωνικού Σφάλματος
   float ret=0;
   int index=0;
   float cumul=0;  
@@ -50,7 +50,7 @@ float calculateMSE(float error[]){
   return ret;
 }
 
-void display_error_analysis(float f[], int size){
+void display_error_analysis(float f[], int size){	//Συνάρτηση Εκτύπωσης (Θέμα Γ)
 
     int index=0;  
     float error[SIZEOFMATRIX];
@@ -71,7 +71,7 @@ void display_error_analysis(float f[], int size){
     printf("Η πρόβλεψη για τον τελευταίο χρόνο είναι: %.2f \n",f[SIZEOFMATRIX]);    
 }
 
-void exponential_smoothing(float f[], int size, float a){
+void exponential_smoothing(float f[], int size, float a){	//Υπολογισμός προβλέψεων (Θέμα Β)
     int index=0;
     float provlepsi;
     

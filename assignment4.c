@@ -1,11 +1,12 @@
 #include<stdio.h>
 #include <stdlib.h>
+#include <string.h>
 
    char base_digits[16] =
 	 {'0', '1', '2', '3', '4', '5', '6', '7',
-	  '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+	  '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};	//Δομή που χρησιμοποιείτε από την dec2base για την μετατροπή βάσης
 
-int getInputFromKeyboard(){
+int getInputFromKeyboard(){	//(Θέμα Α) Εισαγωγή  βάσης με τεχνική αμυντικού προγραμματισμού 
     int base;
     char trash[1024];  
     while ( 1 ){
@@ -19,7 +20,7 @@ int getInputFromKeyboard(){
 }
 
 
-int validnumber(int b, char *p){
+int validnumber(int b, char *p){	//(Θέμα Β) To validation γίνεται με την χρήση της strtol η οποία επιστρέφει 0 σε περίπτωση μη έγκυρου string ως προς μια βάση
   long int ret;
   char *pEnd;
   ret = strtol (p,&pEnd,b);
@@ -27,14 +28,14 @@ int validnumber(int b, char *p){
   return ret;
 }
 
-unsigned long base2dec(int b, char *p){
+unsigned long base2dec(int b, char *p){	// (Θέμα Γ) H base2dec  γίνεται με την χρήση της strtol η οποία επιστρέφει τη δεκαδική αναπαράσταση οποιουδήποτε αριθμού ως προς μια βάση
     long int ret=0;
     char * pEnd;
     ret = strtol(p,&pEnd,b);
     return ret;
 }
 
-void dec2base(int b, unsigned  int x){
+void dec2base(int b, unsigned  int x){	//(Θέμα Δ) Συνάρτηση μετατροπή βάσης με τη χρήση διαδοχικών modules (%)
   int converted_number[64];
   long int number_to_convert = x;
   int next_digit, base, index=0;  
@@ -65,13 +66,22 @@ main() {
     int isvalid=0;
     int converteddec=0;
     int index=2;
+    
     printf("Καλωσήρθατε στο πρόγραμμα μετατροπής βάσης!\n");
     printf("Παρακαλώ επιλέξτε έναν ακέραιο αριθμό από το 2 έως το 16 που θα χρησιμοποιηθεί ως βάση: ");
     base = getInputFromKeyboard();
     printf("Ο Αριθμός που δώσατε ήταν αποδεκτός: %d\n", base);  
-    printf("Παρακαλώ επιλέξτε έναν αριθμό που είναι έγκυρος βάσει της επιλεγείσας βάσης (%d):",base);      
-    scanf( "%126s", p );  
-    isvalid = validnumber(base,p);
+    printf("Παρακαλώ επιλέξτε έναν αριθμό (μέχρι 8 χαρακτήρες) που είναι έγκυρος βάσει της επιλεγείσας βάσης (%d):",base);      
+    while (isvalid==0){
+      scanf( "%126s", p );  
+      isvalid = validnumber(base,p);
+      if (isvalid==1){
+	if (strlen(p)>8) {
+	  printf("Υπενθυμίζουμε οτι επιτρέπονται μέχρι 8 χαρακτήρες! Προσπαθείστε ξανά:\n");
+	  isvalid=0;
+	}
+      } printf("Μη έγκυροιχαρακτήρες για την βάση που επιλέξατε! Προσπαθείστε ξανά:\n");
+    }
     printf("Εισάγατε τον αριθμό  '%s' του οποίου η εγκυρότητα είναι: %d (0-Όχι, 1-Ναι) \n",p,isvalid);    
     
     if (isvalid==0) {
